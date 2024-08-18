@@ -13,7 +13,7 @@ auth.post('/register', async (req, res) => {
         }
     })
 
-    if (!duplicate) {
+    if (duplicate) {
         return res.status(400).json({
             msg: 'User already exists',
         });

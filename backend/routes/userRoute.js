@@ -3,7 +3,7 @@ import { prisma } from "../db/db.js";
 export const userRouter = Router()
 
 userRouter.post('/contact/add', async (req, res) => {
-    const digitalNumber = req.body.digitalNumber;
+    const digitalNumber = Number.parseInt(req.body.digitalNumber)
 
     try{
         const user = await prisma.user.findFirst({
@@ -19,7 +19,7 @@ userRouter.post('/contact/add', async (req, res) => {
         }
     
         return res.status(200).json({
-            username: user.username,
+            username: user.name,
             digitalNumber,
         });
     }
