@@ -34,7 +34,7 @@ auth.post('/register', async (req, res) => {
             }
         })
 
-        const token = jwt.sign({digitalNumber},JWT_PASS)
+        const token = jwt.sign({digitalNumber,username},JWT_PASS)
     
         return res.status(200).json({
             msg: 'User created successfully',
@@ -67,7 +67,7 @@ auth.post('/login', async (req, res) => {
                 msg: "User not found"
             })
         }
-        const token = jwt.sign({digitalNumber},JWT_PASS)
+        const token = jwt.sign({digitalNumber:user.digitalNumber,username:user.name},JWT_PASS)
 
         return res.status(200).json({
             msg: 'Login success',

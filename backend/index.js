@@ -27,6 +27,10 @@ io.on("connection", (socket) => {
         
         try {
             jwt.verify(token,JWT_PASS)
+            const decoded = jwt.decode(token);
+            if(from != decoded.username){
+                throw new Error("Gadbad hai bhai!!")
+            }
             await prisma.message.create({
                 data:{
                     from,
@@ -37,8 +41,8 @@ io.on("connection", (socket) => {
             socket.broadcast.emit(to, message);  
         }
         catch(e){
-            console.log(e)
             console.log("Message compromised");
+            console.log(msg);
         }
     })
 });
