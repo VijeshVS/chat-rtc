@@ -4,10 +4,12 @@ import { prisma } from '../db/db.js'
 import jwt from 'jsonwebtoken'
 
 const auth = Router()
+const JWT_PASS = process.env.JWT_PASS;
 
 auth.post('/register', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
+    
 
     try{
         const duplicate = await prisma.user.findFirst({
@@ -32,7 +34,7 @@ auth.post('/register', async (req, res) => {
             }
         })
 
-        const token = jwt.decode(digitalNumber)
+        const token = jwt.sign({digitalNumber},JWT_PASS)
     
         return res.status(200).json({
             msg: 'User created successfully',
@@ -65,7 +67,7 @@ auth.post('/login', async (req, res) => {
                 msg: "User not found"
             })
         }
-        const token = jwt.decode(digitalNumber)
+        const token = jwt.sign({digitalNumber},JWT_PASS)
 
         return res.status(200).json({
             msg: 'Login success',

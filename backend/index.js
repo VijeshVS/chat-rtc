@@ -4,12 +4,14 @@ import { Server } from 'socket.io';
 import auth from './routes/authRoute.js'
 import { userRouter } from './routes/userRoute.js';
 import { msgRouter } from './routes/messageRoute.js';
+import { prisma } from './db/db.js';
+import jwt from 'jsonwebtoken'
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 const PORT = 9000;
-
+const JWT_PASS = process.env.JWT_PASS
 
 app.use(express.json());
 
@@ -20,10 +22,12 @@ app.use('/api/v1/message',msgRouter)
 
 
 io.on("connection", (socket) => {
-    socket.on('message',(msg)=>{
-        const {from,to,message} = JSON.parse(msg);
-        try{
-            prisma.message.create({
+    socket.on('message',async (msg)=>{
+        const {from,to,message,token} = JSON.parse(msg);
+        
+        try {
+            jwt.verify(token,JWT_PASS)
+            await prisma.message.create({
                 data:{
                     from,
                     to,
@@ -33,6 +37,7 @@ io.on("connection", (socket) => {
             socket.broadcast.emit(to, message);  
         }
         catch(e){
+            console.log(e)
             console.log("Message compromised");
         }
     })
