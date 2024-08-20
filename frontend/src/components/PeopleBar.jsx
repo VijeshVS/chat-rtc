@@ -1,8 +1,9 @@
 import React from 'react'
 import SearchIcon from "@mui/icons-material/Search";
-import AddIcon from "@mui/icons-material/Add";
 
-const PeopleBar = () => {
+import ModalComponent from './ModalComponent';
+
+const PeopleBar = ({contacts,setContacts}) => {
   return (
     <div className="flex py-4 rounded-xl bg-white flex-col">
           <div className="flex space-x-4 items-center px-3">
@@ -15,9 +16,7 @@ const PeopleBar = () => {
               />
               <SearchIcon fontSize="small" htmlColor="#9ca3af" />
             </div>
-            <div className="bg-orange-500 rounded-2xl p-1 cursor-pointer hover:scale-105">
-              <AddIcon htmlColor="white" fontSize="medium" />
-            </div>
+            <ModalComponent contacts={contacts} setContacts={setContacts} />
           </div>
         </div>
   )

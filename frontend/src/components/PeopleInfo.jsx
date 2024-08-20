@@ -1,14 +1,14 @@
 import React from 'react'
 import { Avatar } from "@mui/material";
 
-const PeopleInfo = () => {
+const PeopleInfo = ({selectedContact}) => {
   return (
     <div className="bg-white p-4 rounded-xl flex justify-between">
     <div className="flex">
-      <Avatar>V</Avatar>
+      <Avatar>{selectedContact.username[0]}</Avatar>
       <div className="flex flex-col ml-2">
-        <h1 className="text-sm font-bold">Vijesh Shetty</h1>
-        <h1 className="text-sm text-gray-400">Online</h1>
+        <h1 className="text-sm font-bold">{selectedContact.username}</h1>
+        <h1 className="text-sm text-gray-400">{selectedContact.digitalNumber}</h1>
       </div>
     </div>
     <div className="flex space-x-2">

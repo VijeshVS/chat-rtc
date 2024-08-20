@@ -1,5 +1,5 @@
 import axios from 'axios'
-const BACKEND_URL = "http://localhost:3000"
+const BACKEND_URL = "http://localhost:9000"
 
 export async function register(username,password){
     const res = await axios.post(BACKEND_URL+'/api/v1/auth/register',{
@@ -37,4 +37,16 @@ export async function login(username,password){
             token:""
         }
     }
+}
+
+export async function isLoggedIn(token){
+   
+    const res = await axios.get(BACKEND_URL + '/api/v1/auth/hasLoggedIn',{
+            headers:{
+                token
+            }
+    })
+    
+    return res.data;
+    
 }
