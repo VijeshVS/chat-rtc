@@ -36,7 +36,7 @@ function App() {
         setSocket(Ksocket);
       });
 
-      Ksocket.on(username, (msg) => {
+      Ksocket.on(username, (msg) => {   
         setMessages((prevMessages) => [...prevMessages, msg]);
       });
 
@@ -71,6 +71,7 @@ function App() {
       const token = localStorage.getItem('token');
       const res = getConversation(selectedContact.username, token).then((res) => {
         setMessages(res.messages);
+        console.log(res.messages)
       });
 
       toast.promise(res, {
@@ -96,7 +97,7 @@ function App() {
 
         {auth ? (
           <>
-            {loginState ? null : <MessageSection setMessages={setMessages} username={username} socket={socket} selectedContact={selectedContact} messages={messages} />}
+            <MessageSection setMessages={setMessages} username={username} socket={socket} selectedContact={selectedContact} messages={messages} />
           </>
         ) : (
           loginState ? (

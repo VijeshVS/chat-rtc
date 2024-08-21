@@ -25,7 +25,8 @@ export async function login(username,password){
         username,
         password
     })
-
+    console.log(res)
+    
     if(res.status == 200){
         return {
             status:res.status,

@@ -25,12 +25,11 @@ app.use('/api/v1/message',msgRouter)
 io.on("connection", (socket) => {
     socket.on('message',async (msg)=>{
         const {from,to,message,token} = JSON.parse(msg);
-        
         try {
             jwt.verify(token,JWT_PASS)
             const decoded = jwt.decode(token);
             if(from != decoded.username){
-                throw new Error("Gadbad hai bhai!!")
+                throw new Error("Token match error")
             }
             await prisma.message.create({
                 data:{
@@ -39,17 +38,16 @@ io.on("connection", (socket) => {
                     message
                 }
             })
-
-            socket.broadcast.emit(to, {
+            const newMsg = {
                 from:from,
                 to:to,
                 message
-            });  
+            }
+            console.log(newMsg)
+            socket.broadcast.emit(to,newMsg);  
         }
         catch(e){
-            console.log(e)
             console.log("Message compromised");
-            console.log(msg);
         }
     })
 });
