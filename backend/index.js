@@ -43,7 +43,6 @@ io.on("connection", (socket) => {
                 to:to,
                 message
             }
-            console.log(newMsg)
             socket.broadcast.emit(to,newMsg);  
         }
         catch(e){

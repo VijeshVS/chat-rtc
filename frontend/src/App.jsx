@@ -71,7 +71,6 @@ function App() {
       const token = localStorage.getItem('token');
       const res = getConversation(selectedContact.username, token).then((res) => {
         setMessages(res.messages);
-        console.log(res.messages)
       });
 
       toast.promise(res, {
