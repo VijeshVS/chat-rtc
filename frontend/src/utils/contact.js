@@ -1,5 +1,5 @@
 import axios from 'axios'
-const BACKEND_URL = "http://localhost:9000"
+const BACKEND_URL = process.env.BACKEND_URL
 
 export async function addContact(digitalNumber,token){
     const res = await axios.post(BACKEND_URL+'/api/v1/user/contact/add',{
