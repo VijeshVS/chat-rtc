@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../db/db.js";
-
+import jwt from 'jsonwebtoken'
 export const msgRouter = Router();
 
 msgRouter.get("/bulk", async (req, res) => {
@@ -14,8 +14,10 @@ msgRouter.get("/bulk", async (req, res) => {
   }
 });
 
-msgRouter.get("/coversation", async (req, res) => {
-  const from = req.body.from;
+msgRouter.post("/conversation", async (req, res) => {
+  const token = req.headers.token;
+  
+  const from = jwt.decode(token).username;
   const to = req.body.to;
 
   try {
@@ -38,10 +40,18 @@ msgRouter.get("/coversation", async (req, res) => {
       });
     }
 
-    const messages = prisma.message.findMany({
+    const messages = await prisma.message.findMany({
       where: {
-        from: from,
-        to: to,
+        OR: [
+          {
+           from:from,
+           to:to
+          },
+          {
+            from:to,
+            to:from
+          },
+        ],
       },
     });
 

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { register } from '../utils/auth';
 import { toast } from 'react-toastify';
+import { jwtDecode } from "jwt-decode";
 
-const Register = ({setLoginState,setAuth}) => {
+const Register = ({setLoginState,setAuth,setMainUsername}) => {
   const [username,setUsername] = useState("")
   const [password,setPassword] = useState("")
 
@@ -33,6 +34,7 @@ const Register = ({setLoginState,setAuth}) => {
               const res = register(username,password).then((res)=>{
                 localStorage.setItem('token',res.token)
                 setAuth(true)
+                setMainUsername(jwtDecode(localStorage.getItem('token')).username)
               })
             
               toast.promise(

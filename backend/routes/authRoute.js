@@ -81,4 +81,20 @@ auth.post('/login', async (req, res) => {
     }
 });
 
+auth.get('/hasLoggedIn',(req,res)=>{
+    const token = req.headers.token;
+
+    try{
+        jwt.verify(token,JWT_PASS)
+        return res.status(200).json({
+            msg: 'Logged In !!'
+        });
+    }
+    catch(e){
+        return res.status(403).json({
+            msg: "Server Error"
+        })
+    }
+})
+
 export default auth

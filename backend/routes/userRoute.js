@@ -1,11 +1,15 @@
 import { Router } from "express";
 import { prisma } from "../db/db.js";
 export const userRouter = Router()
+import jwt from 'jsonwebtoken'
 
 userRouter.post('/contact/add', async (req, res) => {
     const digitalNumber = Number.parseInt(req.body.digitalNumber)
-
+    const JWT_PASS = process.env.JWT_PASS;
+    const token = req.headers.token;
+    
     try{
+        jwt.verify(token,JWT_PASS)
         const user = await prisma.user.findFirst({
             where:{
                 digitalNumber : digitalNumber

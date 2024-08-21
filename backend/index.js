@@ -6,6 +6,7 @@ import { userRouter } from './routes/userRoute.js';
 import { msgRouter } from './routes/messageRoute.js';
 import { prisma } from './db/db.js';
 import jwt from 'jsonwebtoken'
+import cors from 'cors'
 
 const app = express();
 const server = http.createServer(app);
@@ -14,7 +15,7 @@ const PORT = 9000;
 const JWT_PASS = process.env.JWT_PASS
 
 app.use(express.json());
-
+app.use(cors())
 
 app.use('/api/v1/auth',auth)
 app.use('/api/v1/user',userRouter)
@@ -38,9 +39,15 @@ io.on("connection", (socket) => {
                     message
                 }
             })
-            socket.broadcast.emit(to, message);  
+
+            socket.broadcast.emit(to, {
+                from:from,
+                to:to,
+                message
+            });  
         }
         catch(e){
+            console.log(e)
             console.log("Message compromised");
             console.log(msg);
         }
