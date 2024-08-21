@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BACKEND_URL = process.env.BACKEND_URL
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export async function getConversation(to,token){
     const res = await axios.post(BACKEND_URL+'/api/v1/message/conversation',{
         to
