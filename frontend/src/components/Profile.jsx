@@ -57,7 +57,7 @@ export default function Profile() {
                   <Button onClick={()=>{
                       setAuth(false)
                       localStorage.setItem('token',"");
-                      toast("Logged out successfully !!");
+                      toast.success("Logged out successfully !!");
                       handleClose();
                   }} variant="outlined" color="error">Logout</Button>
               </div>

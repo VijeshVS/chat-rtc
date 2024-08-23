@@ -28,16 +28,24 @@ function App() {
   const [socket, setSocket] = useState(null);
 
   const contacts = useRecoilValue(contactsAtom);
-  const selectedContact = useRecoilValue(selectContactAtom);
+  const [selectedContact, setSelectedContact] =
+    useRecoilState(selectContactAtom);
 
   const setMessages = useSetRecoilState(messagesAtom);
   const setFilteredContacts = useSetRecoilState(filterContactAtom);
 
   const [user, setUser] = useRecoilState(userAtom);
   const [auth, setAuth] = useRecoilState(authState);
-  
-  useEffect(() => setFilteredContacts(contacts), [contacts]);
 
+  useEffect(() => setFilteredContacts(contacts), [contacts]);
+  useEffect(
+    () =>
+      setSelectedContact({
+        username: "Name",
+        digitalNumber: "12345",
+      }),
+    [auth]
+  );
   useEffect(() => {
     if (auth && socket == null) {
       const new_socket = io(import.meta.env.VITE_BACKEND_URL, {
@@ -79,7 +87,7 @@ function App() {
 
   // Fetch conversation when a contact is selected
   useEffect(() => {
-    if (auth) {
+    if (auth && selectedContact.username != "Name") {
       const token = localStorage.getItem("token");
       const res = getConversation(selectedContact.username, token).then(
         (res) => {
