@@ -30,7 +30,7 @@ function App() {
   // Handle WebSocket connection
   useEffect(() => {
     if (auth && username && !socket) {
-      const Ksocket = io('http://localhost:9000', { transports: ['websocket'] });
+      const Ksocket = io(import.meta.env.VITE_BACKEND_URL, { transports: ['websocket'] });
       
       Ksocket.on('connect', () => {
         console.log('Connected to WebSocket server');
