@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button } from '@mui/material';
 import { toast } from 'react-toastify';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { authState, userAtom } from '../store/store';
 
 const style = {
     position: 'absolute',
@@ -18,10 +20,13 @@ const style = {
     borderRadius: '8px', // or any other value you prefer
   };
 
-export default function Profile({setAuth,auth}) {
+export default function Profile() {
+  const [auth,setAuth] = useRecoilState(authState);
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const user = useRecoilValue(userAtom);
 
   return (
     <div>
@@ -45,8 +50,8 @@ export default function Profile({setAuth,auth}) {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {auth?<div>
               <div className='flex items-center space-y-1 flex-col'>
-                      <h1 className='text-2xl'>Vijesh</h1>
-                      <h1 className='text-gray-400 text-sm'>34567</h1>
+                      <h1 className='text-2xl'>{user.username}</h1>
+                      <h1 className='text-gray-400 text-sm'>{user.digitalNumber}</h1>
               </div>
               <div className='mt-6 flex justify-center'>
                   <Button onClick={()=>{

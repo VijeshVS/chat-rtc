@@ -1,7 +1,12 @@
 import React from 'react'
 import { Avatar } from "@mui/material";
+import { useRecoilValue } from 'recoil';
+import { selectContactAtom } from '../store/store';
 
-const PeopleInfo = ({selectedContact}) => {
+const PeopleInfo = () => {
+
+  const selectedContact = useRecoilValue(selectContactAtom);
+
   return (
     <div className="bg-white p-4 rounded-xl flex justify-between">
     <div className="flex">

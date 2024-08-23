@@ -2,9 +2,14 @@ import React, { useState } from 'react'
 import SearchIcon from "@mui/icons-material/Search";
 
 import ModalComponent from './ModalComponent';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { contactsAtom, filterContactAtom } from '../store/store';
 
-const PeopleBar = ({setFilteredContacts,contacts,setContacts}) => {
+const PeopleBar = () => {
   const [searchBar,setSearchBar] = useState("");
+  const contacts = useRecoilValue(contactsAtom);
+  const setFilteredContacts = useSetRecoilState(filterContactAtom)
+
   return (
     <div className="flex py-4 rounded-xl bg-white flex-col">
           <div className="flex space-x-4 items-center px-3">
@@ -22,7 +27,7 @@ const PeopleBar = ({setFilteredContacts,contacts,setContacts}) => {
               />
               <SearchIcon fontSize="small" htmlColor="#9ca3af" />
             </div>
-            <ModalComponent contacts={contacts} setContacts={setContacts} />
+            <ModalComponent />
           </div>
         </div>
   )

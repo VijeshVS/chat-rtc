@@ -2,11 +2,16 @@ import React, { useState } from 'react'
 import { register } from '../utils/auth';
 import { toast } from 'react-toastify';
 import { jwtDecode } from "jwt-decode";
+import { useSetRecoilState } from 'recoil';
+import { authState, userAtom } from '../store/store';
 
-const Register = ({setLoginState,setAuth,setMainUsername}) => {
+const Register = ({setLoginState,setMainUsername}) => {
   const [username,setUsername] = useState("")
   const [password,setPassword] = useState("")
+  const setUser = useSetRecoilState(userAtom);
 
+  const setAuth = useSetRecoilState(authState);
+  
   return (
     <div className="bg-white flex flex-col h-full space-y-6 rounded-xl p-4 items-center justify-center">
           <h1 className="text-3xl font-bold text-center">Register</h1>
@@ -34,7 +39,7 @@ const Register = ({setLoginState,setAuth,setMainUsername}) => {
               const res = register(username,password).then((res)=>{
                 localStorage.setItem('token',res.token)
                 setAuth(true)
-                setMainUsername(jwtDecode(localStorage.getItem('token')).username)
+                setUser(jwtDecode(localStorage.getItem('token')))
               })
             
               toast.promise(

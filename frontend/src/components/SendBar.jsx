@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
 import SendIcon from "@mui/icons-material/Send";
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { messagesAtom, selectContactAtom, userAtom } from '../store/store';
 
-const SendBar = ({messages,setMessages,selectedContact,socket,username}) => {
+const SendBar = ({socket}) => {
   const [msg,setMsg] = useState("")
+  const user = useRecoilValue(userAtom);
+  const selectedContact = useRecoilValue(selectContactAtom);
+  const setMessages = useSetRecoilState(messagesAtom);
+
   return (
     <div className="flex space-x-2 justify-between">
             <input value={msg}
@@ -13,7 +19,7 @@ const SendBar = ({messages,setMessages,selectedContact,socket,username}) => {
             />
             <div onClick={()=>{
               const newMsg = {
-                from:username,
+                from:user.username,
                 to:selectedContact.username,
                 token: localStorage.getItem('token'),
                 message: msg

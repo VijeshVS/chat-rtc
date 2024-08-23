@@ -6,6 +6,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button } from '@mui/material';
 import { addContact } from '../utils/contact';
 import { toast } from "react-toastify";
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { authState, contactsAtom } from '../store/store';
+import { useState } from 'react';
 
 const style = {
     position: 'absolute',
@@ -19,16 +22,20 @@ const style = {
     borderRadius: '8px', // or any other value you prefer
   };
 
-export default function ModalComponent({contacts,setContacts}) {
-  const [open, setOpen] = React.useState(false);
+export default function ModalComponent() {
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [digitalNumber,setDigitalNumber] = React.useState();
+  const [contacts,setContacts] = useRecoilState(contactsAtom);
+  const auth = useRecoilValue(authState);
+
+  const [digitalNumber,setDigitalNumber] = useState();
   return (
     <div>
       <div onClick={handleOpen} className="bg-orange-500 rounded-2xl p-1 cursor-pointer hover:scale-105">
               <AddIcon htmlColor="white" fontSize="medium" />
       </div>
+      
       <Modal
         open={open}
         onClose={handleClose}
@@ -40,7 +47,7 @@ export default function ModalComponent({contacts,setContacts}) {
             <h1 className='font-semibold text-center text-xl'>Add contact</h1>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <div className='flex space-y-6 flex-col'>
+            {auth?<div className='flex space-y-6 flex-col'>
             <input onChange={(e)=>setDigitalNumber(e.target.value)} className='focus:outline-none p-2 border-2 rounded-2xl w-full border-gray-300' type="text" placeholder='Enter digital number' />
             <Button variant="outlined" size="small" onClick={()=>{
                 const dups = contacts.filter((c)=>{
@@ -65,7 +72,7 @@ export default function ModalComponent({contacts,setContacts}) {
                 }
                 handleClose()
             }}>Add</Button>
-            </div>
+            </div>:<div>Login / Register to continue</div>}
           </Typography>
         </Box>
       </Modal>
