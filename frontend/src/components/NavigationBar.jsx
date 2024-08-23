@@ -33,7 +33,7 @@ const NavigationBar = ({setAuth,auth}) => {
             fontSize="medium"
           />
         </div>
-        {auth?<Profile setAuth={setAuth}/>:<div></div>}
+        <Profile auth={auth} setAuth={setAuth}/>
       </div>
   )
 }

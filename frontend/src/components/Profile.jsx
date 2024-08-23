@@ -18,7 +18,7 @@ const style = {
     borderRadius: '8px', // or any other value you prefer
   };
 
-export default function Profile({setAuth}) {
+export default function Profile({setAuth,auth}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,18 +43,21 @@ export default function Profile({setAuth}) {
             <h1 className='text-3xl font-bold'>My Profile</h1>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <div className='flex items-center space-y-1 flex-col'>
-                    <h1 className='text-2xl'>Vijesh</h1>
-                    <h1 className='text-gray-400 text-sm'>34567</h1>
-            </div>
-            <div className='mt-6 flex justify-center'>
-                <Button onClick={()=>{
-                    setAuth(false)
-                    localStorage.setItem('token',"");
-                    toast("Logged out successfully !!");
-                    handleClose();
-                }} variant="outlined" color="error">Logout</Button>
-            </div>
+            {auth?<div>
+              <div className='flex items-center space-y-1 flex-col'>
+                      <h1 className='text-2xl'>Vijesh</h1>
+                      <h1 className='text-gray-400 text-sm'>34567</h1>
+              </div>
+              <div className='mt-6 flex justify-center'>
+                  <Button onClick={()=>{
+                      setAuth(false)
+                      localStorage.setItem('token',"");
+                      toast("Logged out successfully !!");
+                      handleClose();
+                  }} variant="outlined" color="error">Logout</Button>
+              </div>
+            </div>:<div>Login / Register to continue</div> }
+            
           </Typography>
         </Box>
       </Modal>
