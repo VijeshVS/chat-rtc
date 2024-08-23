@@ -1,12 +1,13 @@
 import React from 'react'
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import VerifiedIcon from "@mui/icons-material/Verified";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import InboxIcon from "@mui/icons-material/Inbox";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Profile from './Profile';
 
-const NavigationBar = () => {
+const NavigationBar = ({setAuth}) => {
   return (
     <div className="rounded-xl bg-black flex flex-col p-4 justify-between">
         <VerifiedIcon htmlColor="#EC592B" fontSize="medium" />
@@ -32,11 +33,7 @@ const NavigationBar = () => {
             fontSize="medium"
           />
         </div>
-        <AccountCircleIcon
-          className="cursor-pointer hover:scale-105"
-          htmlColor="white"
-          fontSize="medium"
-        />
+        <Profile setAuth={setAuth}/>
       </div>
   )
 }

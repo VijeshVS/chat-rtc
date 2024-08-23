@@ -8,7 +8,11 @@ userRouter.post('/contact/add', async (req, res) => {
     const JWT_PASS = process.env.JWT_PASS;
     const token = req.headers.token;
     
+    const decoded = jwt.decode(token);
+
     try{
+        if(decoded.digitalNumber == digitalNumber)
+            throw new Error("Self Contact Addition")
         jwt.verify(token,JWT_PASS)
         const user = await prisma.user.findFirst({
             where:{

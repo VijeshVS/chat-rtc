@@ -88,7 +88,7 @@ function App() {
   return (
     <div className="flex space-x-2 bg-gray-300 h-screen px-8 py-4">
       <ToastContainer />
-      <NavigationBar />
+      <NavigationBar setAuth={setAuth} />
       
       <div className="flex flex-col space-y-2">
         <PeopleBar setFilteredContacts={setFilteredContacts} contacts={contacts} setContacts={setContacts} />
