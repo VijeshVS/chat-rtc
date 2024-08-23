@@ -15,7 +15,10 @@ const PORT = 9000;
 const JWT_PASS = process.env.JWT_PASS
 
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
+  }));
 
 app.use('/api/v1/auth',auth)
 app.use('/api/v1/user',userRouter)
