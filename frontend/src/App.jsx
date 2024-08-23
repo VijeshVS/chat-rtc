@@ -27,13 +27,16 @@ function App() {
   const [username, setUsername] = useState("");
   const [socket, setSocket] = useState(null);
 
+  const [filteredContacts,setFilteredContacts] = useState([]);
+
+  useEffect(()=>setFilteredContacts(contacts),[contacts])
+
   // Handle WebSocket connection
   useEffect(() => {
     if (auth && username && !socket) {
       const Ksocket = io(import.meta.env.VITE_BACKEND_URL, { transports: ['websocket'] });
       
       Ksocket.on('connect', () => {
-        console.log('Connected to WebSocket server');
         setSocket(Ksocket);
       });
 
@@ -88,8 +91,8 @@ function App() {
       <NavigationBar />
       
       <div className="flex flex-col space-y-2">
-        <PeopleBar contacts={contacts} setContacts={setContacts} />
-        <PeopleList setSelectedContact={setSelectedContact} contacts={contacts} />
+        <PeopleBar setFilteredContacts={setFilteredContacts} contacts={contacts} setContacts={setContacts} />
+        {auth ? <PeopleList setSelectedContact={setSelectedContact} contacts={filteredContacts} />:<div className="bg-white rounded-xl pl-2 no-scrollbar h-full "></div>}
       </div>
       
       <div className="flex flex-col w-full space-y-2">
