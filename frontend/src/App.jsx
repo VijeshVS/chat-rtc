@@ -39,22 +39,22 @@ function App() {
   useEffect(() => setFilteredContacts(contacts), [contacts]);
 
   useEffect(() => {
-    if (auth && !socket) {
-      const Ksocket = io(import.meta.env.VITE_BACKEND_URL, {
+    if (auth && socket == null) {
+      const new_socket = io(import.meta.env.VITE_BACKEND_URL, {
         transports: ["websocket"],
       });
 
-      Ksocket.on("connect", () => {
-        setSocket(Ksocket);
+      new_socket.on("connect", () => {
+        setSocket(new_socket);
       });
 
-      Ksocket.on(user.username, (msg) => {
+      new_socket.on(user.username, (msg) => {
         setMessages((prevMessages) => [...prevMessages, msg]);
       });
 
       return () => {
-        Ksocket.off(user.username);
-        Ksocket.disconnect();
+        new_socket.off(user.username);
+        new_socket.disconnect();
       };
     }
   }, [auth]);

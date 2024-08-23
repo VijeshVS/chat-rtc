@@ -1,7 +1,7 @@
 import React from 'react'
 import PeopleCard from "./PeopleCard";
 import { useRecoilValue } from 'recoil';
-import { contactsAtom, filterContactAtom } from '../store/store';
+import { filterContactAtom } from '../store/store';
 
 const PeopleList = () => {
   const contacts = useRecoilValue(filterContactAtom);
