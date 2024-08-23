@@ -7,7 +7,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Profile from './Profile';
 
-const NavigationBar = ({setAuth}) => {
+const NavigationBar = ({setAuth,auth}) => {
   return (
     <div className="rounded-xl bg-black flex flex-col p-4 justify-between">
         <VerifiedIcon htmlColor="#EC592B" fontSize="medium" />
@@ -33,7 +33,7 @@ const NavigationBar = ({setAuth}) => {
             fontSize="medium"
           />
         </div>
-        <Profile setAuth={setAuth}/>
+        {auth?<Profile setAuth={setAuth}/>:<div></div>}
       </div>
   )
 }
