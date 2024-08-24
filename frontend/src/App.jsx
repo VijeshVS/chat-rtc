@@ -27,7 +27,7 @@ function App() {
   const [loginState, setLoginState] = useState(false);
   const [socket, setSocket] = useState(null);
 
-  const contacts = useRecoilValue(contactsAtom);
+  const [contacts,setContacts] = useRecoilState(contactsAtom);
   const [selectedContact, setSelectedContact] =
     useRecoilState(selectContactAtom);
 
@@ -102,6 +102,7 @@ function App() {
       });
     }
   }, [selectedContact]);
+
 
   return (
     <div className="flex space-x-2 bg-gray-300 h-screen px-8 py-4">

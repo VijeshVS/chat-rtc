@@ -20,7 +20,7 @@ export const selectContactAtom = atom({
 
 export const contactsAtom = atom({
     key:'contactsAtom',
-    default: JSON.parse(localStorage.getItem('contacts')) || []
+    default: []
 })
 
 export const messagesAtom = atom({

@@ -13,7 +13,7 @@ const Login = ({ setLoginState }) => {
 
   return (
     <div className="bg-white flex flex-col h-full space-y-6 rounded-xl p-4 items-center justify-center">
-      <h1 className="text-3xl font-bold text-center">Login</h1>
+      <h1 className="text-3xl font-bold text-center">Welcome Back !!</h1>
       <div className="flex flex-col space-y-1">
         <p className="font-semibold">Name</p>
         <input
@@ -34,13 +34,13 @@ const Login = ({ setLoginState }) => {
         />
       </div>
       <div className="flex flex-col items-center">
-        <button
+      <button
           onClick={() => {
             const res = login(username, password).then((res) => {
               localStorage.setItem("token", res.token);
               setAuth(true);
-              const decoded = jwtDecode(localStorage.getItem('token'))
-              setUser(decoded)
+              const decoded = jwtDecode(localStorage.getItem("token"));
+              setUser(decoded);
             });
 
             toast.promise(res, {
@@ -49,7 +49,7 @@ const Login = ({ setLoginState }) => {
               error: "Login Failed",
             });
           }}
-          className="bg-black text-white font-bold p-3 rounded-3xl hover:scale-105 text-sm w-24"
+          className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold p-3 rounded-full hover:scale-105 transition-transform duration-200 ease-in-out text-sm w-32 shadow-md"
         >
           Login
         </button>

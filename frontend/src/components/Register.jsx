@@ -51,7 +51,7 @@ const Register = ({setLoginState,setMainUsername}) => {
                 }
             )
               
-            }} className="bg-black text-white font-bold p-3 rounded-3xl hover:scale-105 text-sm w-24">
+            }} className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold p-3 rounded-full hover:scale-105 transition-transform duration-200 ease-in-out text-sm w-32 shadow-md">
               Register
             </button>
             <div className="flex mt-2">
