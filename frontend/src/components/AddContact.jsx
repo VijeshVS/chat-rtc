@@ -30,7 +30,7 @@ export default function AddContactButton() {
   const [contacts, setContacts] = useRecoilState(contactsAtom);
   const auth = useRecoilValue(authState);
   const user = useRecoilValue(userAtom);
-  const [digitalNumber, setDigitalNumber] = useState('');
+  const [digitalNumber, setDigitalNumber] = useState("");
 
   return (
     <div>
@@ -68,24 +68,23 @@ export default function AddContactButton() {
                   color="primary"
                   size="large"
                   onClick={() => {
-                    const dups = contacts.filter((c) => c.digitalNumber === digitalNumber);
-
-                    if (dups.length === 0) {
+                    
+                    const dups = contacts.filter((c)=>{
+                      return c.digitalNumber == digitalNumber
+                    })
+                    
+                    if(digitalNumber == user.digitalNumber){
+                        toast.info("Cannot add yourself as a contact!");
+                    }
+                    else if (dups.length == 0) {
                       const res = addContact(digitalNumber, localStorage.getItem('token')).then((res) => {
-                        const new_contact = res.user;
-                        setContacts([...contacts, new_contact]);
-                        try{
-                          const localContacts = JSON.parse(localStorage.getItem('contacts'));
-                          localContacts[user.username] = [...contacts, new_contact];
-                          
-                          localStorage.setItem('contacts',JSON.stringify(localContacts))
-                        }
-                        catch(e){
-                          const name = user.username;
-                          const new_contacts = {}
-                          new_contacts[name] = [...contacts, new_contact]
-                          localStorage.setItem('contacts',JSON.stringify(new_contacts))
-                        }
+                        const localContacts = JSON.parse(localStorage.getItem('contacts'))
+                        const new_user = res.user;
+                        const new_contacts = [...contacts,new_user];
+                        
+                        localContacts[user.username] = new_contacts
+                        localStorage.setItem('contacts',JSON.stringify(localContacts));
+                        setContacts(new_contacts)
                       });
 
                       toast.promise(res, {
@@ -96,6 +95,7 @@ export default function AddContactButton() {
                     } else {
                       toast.info("Contact is already added!");
                     }
+                    setDigitalNumber("");
                     handleClose();
                   }}
                   sx={{

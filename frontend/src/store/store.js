@@ -1,4 +1,4 @@
-import {atom} from 'recoil'
+import {atom, selector} from 'recoil'
 
 export const authState = atom({
     key: 'authState',
@@ -18,10 +18,34 @@ export const selectContactAtom = atom({
     }
 })
 
+// export const contactsAtom = atom({
+//     key:'contactsAtom',
+//     default: []
+// })
+
 export const contactsAtom = atom({
-    key:'contactsAtom',
-    default: []
+    key: 'contactsAtom',
+    default: selector({
+      key: 'contactsDefaultSelector',
+      get: ({ get }) => {
+        const username = get(userAtom).username;
+        let localContacts = JSON.parse(localStorage.getItem('contacts'));
+  
+        if(!localContacts){
+            localContacts = {}
+        }
+        
+        if (!localContacts[username]) {
+          localContacts[username] = [];
+        }
+        
+        if(username) localStorage.setItem('contacts', JSON.stringify(localContacts));
+
+        return localContacts[username];
+      },
+    })
 })
+  
 
 export const messagesAtom = atom({
     key: 'messagesAtom',
@@ -32,3 +56,4 @@ export const filterContactAtom = atom({
     key: 'filterContactAtom',
     default: []
 })
+
