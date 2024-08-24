@@ -16,11 +16,14 @@ const MessageList = () => {
 
   return (
     <div ref={scrollRef} className="flex flex-col space-y-3 py-2 px-4 overflow-y-scroll h-full rounded-lg">
-      {messages.length === 0 ? (
+      {messages.length === 0 ? selectedContact.username == "Name"?
         <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
-          No messages yet. Start the conversation!
+          Select a contact to start messaging !!
+        </div>:
+        <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
+        No messages yet. Start the conversation!
         </div>
-      ) : (
+       : (
         messages.map((m, index) => {
           if (selectedContact.username === m.from && m.to === user.username) {
             return (
