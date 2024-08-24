@@ -25,13 +25,15 @@ const MessageList = () => {
         </div>
        : (
         messages.map((m, index) => {
+          let sentTime = "12:34 PM";
+          if(m.sentTime) sentTime = m.sentTime.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })
           if (selectedContact.username === m.from && m.to === user.username) {
             return (
               <div key={index} className="flex flex-col max-w-xs self-start">
                 <div className="p-3 rounded-tr-2xl rounded-tl-2xl rounded-br-2xl bg-gray-200 text-gray-900 text-sm shadow-md">
                   {m.message}
                 </div>
-                <span className="text-xs text-gray-500 mt-1">{m.sentTime.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}</span>
+                <span className="text-xs text-gray-500 mt-1">{sentTime}</span>
               </div>
             );
           } else if (m.to === selectedContact.username && m.from === user.username) {
@@ -40,7 +42,7 @@ const MessageList = () => {
                 <div className="p-3 rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl bg-blue-500 text-white text-sm shadow-md">
                   {m.message}
                 </div>
-                <span className="text-xs text-gray-500 mt-1 self-end">{m.sentTime.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}</span>
+                <span className="text-xs text-gray-500 mt-1 self-end">{sentTime}</span>
               </div>
             );
           }

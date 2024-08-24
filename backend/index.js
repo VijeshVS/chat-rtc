@@ -52,6 +52,7 @@ io.on("connection", (socket) => {
             socket.broadcast.emit(to,newMsg);  
         }
         catch(e){
+            console.log(e)
             console.log("Message compromised");
         }
     })
