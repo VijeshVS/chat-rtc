@@ -34,6 +34,7 @@ io.on("connection", (socket) => {
             if(from != decoded.username){
                 throw new Error("Token match error")
             }
+            
             const time = new Date();
             await prisma.message.create({
                 data:{
