@@ -9,7 +9,7 @@ const MessageSection = ({socket}) => {
   const selected = useRecoilValue(selectContactAtom);
 
   return (
-    <div className="bg-white flex flex-col overflow-scroll rounded-xl p-4 justify-between">
+    <div className="bg-white flex flex-col h-full overflow-scroll rounded-xl p-4 justify-between">
           <MessageList/>
           {auth && selected.username != "Name"?<SendBar socket={socket}/>:<></>}
     </div> 

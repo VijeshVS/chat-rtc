@@ -30,7 +30,7 @@ export default function Profile() {
 
     return (
         <div>
-            <div onClick={handleOpen} className="rounded-full p-1 cursor-pointer hover:scale-105 transition-transform duration-200">
+            <div onClick={handleOpen} className="rounded-full p-1 cursor-pointer hover:scale-125 transition-transform duration-200">
                 <AccountCircleIcon
                     className="cursor-pointer"
                     htmlColor="white"
