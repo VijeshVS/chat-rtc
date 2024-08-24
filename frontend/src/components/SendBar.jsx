@@ -35,7 +35,7 @@ const SendBar = ({socket}) => {
       >
         <TelegramIcon htmlColor="white" fontSize="medium" />
       </div>
-          </div>
+    </div>
   )
 }
 

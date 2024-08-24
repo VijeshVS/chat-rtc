@@ -103,9 +103,8 @@ function App() {
     }
   }, [selectedContact]);
 
-
   return (
-    <div className="flex space-x-2 bg-gray-300 h-screen px-8 py-4">
+    <div className={`flex space-x-2 bg-gray-300 h-screen px-8 py-4`}>
       <ToastContainer />
       <NavigationBar />
 
