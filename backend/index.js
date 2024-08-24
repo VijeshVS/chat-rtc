@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
                     from,
                     to,
                     message,
-                    sentTime: time
+                    sentTime: new Date(time)
                 }
             })
             const newMsg = {

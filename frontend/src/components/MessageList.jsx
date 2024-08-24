@@ -25,8 +25,10 @@ const MessageList = () => {
         </div>
        : (
         messages.map((m, index) => {
-          let sentTime = "12:34 PM";
-          if(m.sentTime) sentTime = m.sentTime.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })
+          let sentTime = "00:00 AM";
+          const time = new Date(m.sentTime);
+          if(m.sentTime) 
+            sentTime = time.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })
           if (selectedContact.username === m.from && m.to === user.username) {
             return (
               <div key={index} className="flex flex-col max-w-xs self-start">
