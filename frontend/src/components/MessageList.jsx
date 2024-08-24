@@ -31,7 +31,7 @@ const MessageList = () => {
                 <div className="p-3 rounded-tr-2xl rounded-tl-2xl rounded-br-2xl bg-gray-200 text-gray-900 text-sm shadow-md">
                   {m.message}
                 </div>
-                <span className="text-xs text-gray-500 mt-1">12:34 PM</span> {/* Dummy time */}
+                <span className="text-xs text-gray-500 mt-1">{m.sentTime.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}</span>
               </div>
             );
           } else if (m.to === selectedContact.username && m.from === user.username) {
@@ -40,7 +40,7 @@ const MessageList = () => {
                 <div className="p-3 rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl bg-blue-500 text-white text-sm shadow-md">
                   {m.message}
                 </div>
-                <span className="text-xs text-gray-500 mt-1 self-end">12:34 PM</span> {/* Dummy time */}
+                <span className="text-xs text-gray-500 mt-1 self-end">{m.sentTime.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })}</span>
               </div>
             );
           }

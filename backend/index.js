@@ -34,17 +34,20 @@ io.on("connection", (socket) => {
             if(from != decoded.username){
                 throw new Error("Token match error")
             }
+            const time = new Date();
             await prisma.message.create({
                 data:{
                     from,
                     to,
-                    message
+                    message,
+                    sentTime: time
                 }
             })
             const newMsg = {
                 from:from,
                 to:to,
-                message
+                message,
+                sentTime: time
             }
             socket.broadcast.emit(to,newMsg);  
         }

@@ -24,7 +24,8 @@ const SendBar = ({socket}) => {
               from: user.username,
               to: selectedContact.username,
               token: localStorage.getItem('token'),
-              message: msg
+              message: msg,
+              sentTime: new Date()
             };
             socket.emit('message', JSON.stringify(newMsg));
             setMsg('');
