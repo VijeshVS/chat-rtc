@@ -11,9 +11,17 @@ userRouter.post('/contact/add', async (req, res) => {
     const decoded = jwt.decode(token);
 
     try{
+        jwt.verify(token,JWT_PASS)
+    }
+    catch(e){
+        return res.status(403).json({
+            msg: "Unauthorized"
+        })
+    }
+
+    try{
         if(decoded.digitalNumber == digitalNumber)
             throw new Error("Self Contact Addition")
-        jwt.verify(token,JWT_PASS)
         const user = await prisma.user.findFirst({
             where:{
                 digitalNumber : digitalNumber
@@ -36,20 +44,4 @@ userRouter.post('/contact/add', async (req, res) => {
             msg: "Server Error"
         });
     }
-});
-
-userRouter.get('/bulk', async (req, res) => {
-    try{
-        const users = await prisma.user.findMany({});
-
-        return res.status(200).json({
-            users,
-        });
-    }
-    catch(e){
-        return res.status(500).json({
-            msg: "Server Error"
-        })
-    }
-    
 });

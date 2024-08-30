@@ -92,7 +92,7 @@ auth.get('/hasLoggedIn',(req,res)=>{
     }
     catch(e){
         return res.status(403).json({
-            msg: "Server Error"
+            msg: "UnAuthorized"
         })
     }
 })
