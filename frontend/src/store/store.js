@@ -18,11 +18,6 @@ export const selectContactAtom = atom({
     }
 })
 
-// export const contactsAtom = atom({
-//     key:'contactsAtom',
-//     default: []
-// })
-
 export const contactsAtom = atom({
     key: 'contactsAtom',
     default: selector({
@@ -57,3 +52,12 @@ export const filterContactAtom = atom({
     default: []
 })
 
+export const groupChatAtom = atom({
+    key:'groupChatAtom',
+    default: false
+})
+
+export const messagesLoadingAtom = atom({
+    key:'messagesLoadingAtom',
+    default: false
+})

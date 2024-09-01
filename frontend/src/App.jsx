@@ -18,10 +18,13 @@ import {
   authState,
   contactsAtom,
   filterContactAtom,
+  groupChatAtom,
   messagesAtom,
+  messagesLoadingAtom,
   selectContactAtom,
   userAtom,
 } from "./store/store";
+import GroupList from "./components/GroupList";
 
 function App() {
   const [loginState, setLoginState] = useState(false);
@@ -36,6 +39,9 @@ function App() {
 
   const [user, setUser] = useRecoilState(userAtom);
   const [auth, setAuth] = useRecoilState(authState);
+
+  const [groupChat,setGroupChat] = useRecoilState(groupChatAtom)
+  const [messagesLoading,setMessagesLoading] = useRecoilState(messagesLoadingAtom)
 
   useEffect(() => setFilteredContacts(contacts), [contacts]);
   useEffect(
@@ -87,31 +93,41 @@ function App() {
 
   // Fetch conversation when a contact is selected
   useEffect(() => {
+    setMessages([])
+    setMessagesLoading(true)
     if (auth && selectedContact.username != "Name") {
       const token = localStorage.getItem("token");
-      const res = getConversation(selectedContact.username, token).then(
+      getConversation(selectedContact.username, token).then(
         (res) => {
           setMessages(res.messages);
+          setMessagesLoading(false)
         }
-      );
-
-      toast.promise(res, {
-        pending: "Fetching messages......",
-        success: "Messages fetched successfully 👌",
-        error: "Error receiving the messages",
-      });
+      ).catch((e)=>{
+        setMessagesLoading(false)
+      })
     }
+    
   }, [selectedContact]);
 
   return (
     <div className={`flex space-x-2 bg-gray-300 h-screen px-8 py-4`}>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover
+      />
       <NavigationBar />
 
       <div className="flex flex-col space-y-2">
         <PeopleBar />
         {auth ? (
-          <PeopleList />
+          groupChat?<GroupList />:<PeopleList />
         ) : (
           <div className="bg-white rounded-xl pl-2 no-scrollbar h-full "></div>
         )}
