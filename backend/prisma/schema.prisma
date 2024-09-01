@@ -28,3 +28,18 @@ model Message {
   sentTime DateTime
 }
 
+model Group {
+  id Int @id @default(autoincrement())
+  name String
+  createdTime DateTime
+  inviteCode String @unique
+  memberships GroupMemberShip[]
+}
+
+model GroupMemberShip{
+  id Int @id @default(autoincrement())
+  digitalNumber Int
+  group Group @relation(fields: [groupId], references: [id])
+  groupId Int
+}
+

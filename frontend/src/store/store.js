@@ -1,4 +1,4 @@
-import {atom, selector} from 'recoil'
+import {atom, selector, useRecoilValueLoadable} from 'recoil'
 
 export const authState = atom({
     key: 'authState',
@@ -60,4 +60,9 @@ export const groupChatAtom = atom({
 export const messagesLoadingAtom = atom({
     key:'messagesLoadingAtom',
     default: false
+})
+
+export const unReadMessagesAtom = atom({
+    key : 'unReadMessagesAtom',
+    default: []
 })
