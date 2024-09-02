@@ -14,10 +14,13 @@ const MessageList = () => {
   const messages = useRecoilValue(messagesAtom);
   const messagesLoading = useRecoilValue(messagesLoadingAtom);
 
-  function isSelectedContactMessageEmpty(){
-    console.log("hey sir")
-    for(let i = 0;i<messages.length;i++){
-      if(messages[i].from == selectedContact.username){
+  function isSelectedContactMessageEmpty() {
+    console.log("hey sir");
+    for (let i = 0; i < messages.length; i++) {
+      if (
+        messages[i].from == selectedContact.username ||
+        messages[i].to == selectedContact.username
+      ) {
         return false;
       }
     }
@@ -31,29 +34,27 @@ const MessageList = () => {
     }
   }, [messages, scrollRef]);
 
-  return (
+  return selectedContact.username == "Name" ? (
+    <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
+      Select a contact to start messaging !!
+    </div>
+  ) : messagesLoading ? (
+    <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
+      <div className="flex animate-pulse">
+        <span className="block">Loading</span>
+        <span className="block ml-2">messages</span>
+        <span className="block ml-1"> ...</span>
+      </div>
+    </div>
+  ) : isSelectedContactMessageEmpty() ? (
+    <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
+      No messages yet. Start the conversation!
+    </div>
+  ) : (
     <div
       ref={scrollRef}
       className="flex flex-col space-y-3 py-2 px-4 overflow-y-scroll h-full rounded-lg scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-500"
     >
-      {selectedContact.username == "Name" ? (
-        <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
-          Select a contact to start messaging !!
-        </div>
-      ) : messagesLoading ? (
-        <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
-          <div className="flex animate-pulse">
-            <span className="block">Loading</span>
-            <span className="block ml-2">messages</span>
-            <span className="block ml-1"> ...</span>
-          </div>
-        </div>
-      ) :  ( isSelectedContactMessageEmpty() ?
-        <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
-          No messages yet. Start the conversation!
-        </div>:<></>
-      )}
-
       {messages.length == 0
         ? null
         : messages.map((m, index) => {
