@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import AddContactButton from './AddContact';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { contactsAtom, filterContactAtom } from '../store/store';
+import AddContactButton from "./AddContact";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { contactsAtom, filterContactAtom } from "../store/store";
 
 const PeopleBar = () => {
   const [searchBar, setSearchBar] = useState("");
@@ -18,7 +18,13 @@ const PeopleBar = () => {
             value={searchBar}
             onChange={(e) => {
               setSearchBar(e.target.value);
-              setFilteredContacts(contacts.filter(c => c.username.toLowerCase().includes(e.target.value.toLowerCase())));
+              setFilteredContacts(
+                contacts.filter((c) =>
+                  c.username
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
+                )
+              );
             }}
             type="text"
             placeholder="Search"
@@ -29,7 +35,7 @@ const PeopleBar = () => {
         <AddContactButton />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default PeopleBar;

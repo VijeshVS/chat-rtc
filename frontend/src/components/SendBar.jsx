@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { messagesAtom, selectContactAtom, userAtom } from '../store/store';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { messagesAtom, selectContactAtom, userAtom } from "../store/store";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import { ToastContainer, toast } from "react-toastify";
 
 const SendBar = ({ socket }) => {
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState("");
   const user = useRecoilValue(userAtom);
   const selectedContact = useRecoilValue(selectContactAtom);
   const setMessages = useSetRecoilState(messagesAtom);
@@ -15,29 +15,29 @@ const SendBar = ({ socket }) => {
       const newMsg = {
         from: user.username,
         to: selectedContact.username,
-        token: localStorage.getItem('token'),
+        token: localStorage.getItem("token"),
         message: msg,
         sentTime: new Date(),
       };
-      socket.emit('message', JSON.stringify(newMsg));
-      setMsg('');
+      socket.emit("message", JSON.stringify(newMsg));
+      setMsg("");
       setMessages((c) => [...c, newMsg]);
     } else {
-      toast.error('Message cannot be empty!', {
-        position: 'top-right',
+      toast.error("Message cannot be empty!", {
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'colored',
+        theme: "colored",
       });
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault(); // Prevent newline in the input field
       sendMessage();
     }

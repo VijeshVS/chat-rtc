@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { login } from "../utils/auth";
 import { toast } from "react-toastify";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useSetRecoilState } from "recoil";
 import { authState, userAtom } from "../store/store";
 
@@ -34,7 +34,7 @@ const Login = ({ setLoginState }) => {
         />
       </div>
       <div className="flex flex-col items-center">
-      <button
+        <button
           onClick={() => {
             const res = login(username, password).then((res) => {
               localStorage.setItem("token", res.token);

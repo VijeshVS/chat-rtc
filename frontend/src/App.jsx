@@ -62,23 +62,23 @@ function App() {
       const new_socket = io(import.meta.env.VITE_BACKEND_URL, {
         transports: ["websocket"],
       });
-  
+
       new_socket.on("connect", () => {
         setSocket(new_socket);
       });
-  
+
       new_socket.off(user.username);
       new_socket.on(user.username, (msg) => {
-        setMessages((prevMessages) => [...prevMessages, msg]); 
+        setMessages((prevMessages) => [...prevMessages, msg]);
       });
-  
+
       new_socket.on("disconnect", () => {
-        setSocket(null); 
+        setSocket(null);
       });
-  
+
       return () => {
-        new_socket.off(user.username); 
-        new_socket.disconnect(); 
+        new_socket.off(user.username);
+        new_socket.disconnect();
       };
     }
   }, [auth]);
@@ -154,33 +154,36 @@ function App() {
     setUnRead(new_unread);
   }, [contacts]);
 
-  useEffect(()=>{
+  useEffect(() => {
     // sort the contacts according to the no of unread
-    if(unRead && socket && contacts){
-      console.log(contacts)
-      setFilteredContacts((cc)=>{
+    if (unRead && socket && contacts) {
+      setFilteredContacts((cc) => {
         const new_cons = [...cc];
         let n = new_cons.length;
-        for(let i = 0;i<n;i++){
-          for(let j = i;j<n-i-1;j++){
-            if(unRead[new_cons[j+1].username] > unRead[new_cons[j].username]){
-              let temp = new_cons[j+1];
-              new_cons[j+1] = new_cons[j];
-              new_cons[j] = temp
+        for (let i = 0; i < n; i++) {
+          for (let j = i; j < n - i - 1; j++) {
+            if (
+              unRead[new_cons[j + 1].username] > unRead[new_cons[j].username]
+            ) {
+              let temp = new_cons[j + 1];
+              new_cons[j + 1] = new_cons[j];
+              new_cons[j] = temp;
             }
           }
         }
-        return new_cons
-      })
+        return new_cons;
+      });
     }
-  },[unRead])
+  }, [unRead, contacts]);
 
   return (
     <div>
-      <div className={`lg:flex space-x-2 hidden bg-gray-300 h-screen px-8 py-4 `}>
+      <div
+        className={`lg:flex space-x-2 hidden bg-gray-300 h-screen px-8 py-4 `}
+      >
         <ToastContainer
           position="top-right"
-          autoClose={2000}
+          autoClose={1500}
           hideProgressBar={false}
           newestOnTop={true}
           closeOnClick
@@ -218,7 +221,7 @@ function App() {
           )}
         </div>
       </div>
-      <NotSupported/>
+      <NotSupported />
     </div>
   );
 }

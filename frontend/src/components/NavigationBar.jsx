@@ -2,8 +2,7 @@ import React from "react";
 import Profile from "./Profile";
 import ChatIcon from "@mui/icons-material/Chat";
 import PersonIcon from "@mui/icons-material/Person";
-import GroupIcon from "@mui/icons-material/Group";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { groupChatAtom } from "../store/store";
 
 const NavigationBar = () => {
