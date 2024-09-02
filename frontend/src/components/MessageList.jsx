@@ -14,6 +14,17 @@ const MessageList = () => {
   const messages = useRecoilValue(messagesAtom);
   const messagesLoading = useRecoilValue(messagesLoadingAtom);
 
+  function isSelectedContactMessageEmpty(){
+    console.log("hey sir")
+    for(let i = 0;i<messages.length;i++){
+      if(messages[i].from == selectedContact.username){
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -37,7 +48,7 @@ const MessageList = () => {
             <span className="block ml-1"> ...</span>
           </div>
         </div>
-      ) :  ( messages.length == 0?
+      ) :  ( isSelectedContactMessageEmpty() ?
         <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
           No messages yet. Start the conversation!
         </div>:<></>
