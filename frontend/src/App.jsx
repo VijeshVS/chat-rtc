@@ -194,21 +194,13 @@ function App() {
         />
         <NavigationBar />
 
-        <div className="flex flex-col space-y-2">
+        {auth?<div className="flex flex-col space-y-2">
           <PeopleBar />
-          {auth ? (
-            groupChat ? (
-              <GroupList />
-            ) : (
-              <PeopleList />
-            )
-          ) : (
-            <div className="bg-white rounded-xl pl-2 no-scrollbar h-full "></div>
-          )}
-        </div>
+          <PeopleList/>
+        </div>:<></>}
 
         <div className="flex flex-col w-full space-y-2">
-          <PeopleInfo />
+          {auth?<PeopleInfo />:<></>}
 
           {auth ? (
             <>

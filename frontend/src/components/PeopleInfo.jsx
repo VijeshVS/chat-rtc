@@ -9,6 +9,8 @@ const PeopleInfo = () => {
 
   return (
     <div className="bg-gray-50 p-3 rounded-xl flex justify-between shadow-lg">
+      <div className={`flex justify-between w-full ${selectedContact.username === "Name" ? "opacity-0" : ""}`}
+      >
       <div className="flex items-center">
         <Avatar sx={{ bgcolor: "#1f2937", color: "#fff", fontSize: "1.2rem" }}>
           {selectedContact.username[0]}
@@ -27,6 +29,7 @@ const PeopleInfo = () => {
         {/* <button className="text-white text-sm py-2 px-7 transition-transform duration-200 ease-in-out hover:scale-105 bg-black rounded-3xl shadow-md hover:bg-gray-800">
           Call
         </button> */}
+      </div>
       </div>
     </div>
   );

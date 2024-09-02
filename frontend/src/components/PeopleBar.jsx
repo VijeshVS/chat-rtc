@@ -11,6 +11,7 @@ const PeopleBar = () => {
 
   return (
     <div className="flex py-4 rounded-xl bg-white shadow-md flex-col">
+      
       <div className="flex space-x-4 items-center px-4">
         <h1 className="text-xl font-semibold text-gray-700">Chat</h1>
         <div className="flex items-center border border-gray-300 rounded-full shadow-sm focus-within:border-blue-500 transition-colors duration-200">
