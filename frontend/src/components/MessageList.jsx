@@ -34,7 +34,7 @@ const MessageList = () => {
   return (
     <div
       ref={scrollRef}
-      className="flex flex-col space-y-3 py-2 px-4 overflow-y-scroll h-full rounded-lg"
+      className="flex flex-col space-y-3 py-2 px-4 overflow-y-scroll h-full rounded-lg scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-500"
     >
       {selectedContact.username == "Name" ? (
         <div className="flex justify-center items-center h-full text-neutral-600 text-lg">

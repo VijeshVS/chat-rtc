@@ -119,7 +119,7 @@ function App() {
 
       toast.promise(res, {
         pending: "Authenticating......",
-        success: "Authenticated 👌",
+        success: "Welcome Back 🎉",
         error: "Register/Login to continue",
       });
     }
