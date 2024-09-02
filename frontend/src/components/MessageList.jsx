@@ -37,10 +37,10 @@ const MessageList = () => {
             <span className="block ml-1"> ...</span>
           </div>
         </div>
-      ) : (
+      ) :  ( messages.length == 0?
         <div className="flex justify-center items-center h-full text-neutral-600 text-lg">
           No messages yet. Start the conversation!
-        </div>
+        </div>:<></>
       )}
 
       {messages.length == 0
