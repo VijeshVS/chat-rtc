@@ -15,7 +15,6 @@ const MessageList = () => {
   const messagesLoading = useRecoilValue(messagesLoadingAtom);
 
   function isSelectedContactMessageEmpty() {
-    console.log("hey sir");
     for (let i = 0; i < messages.length; i++) {
       if (
         messages[i].from == selectedContact.username ||
