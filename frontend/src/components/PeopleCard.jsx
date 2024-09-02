@@ -20,7 +20,7 @@ const PeopleCard = ({ contact }) => {
       </div>
       </div>
       <div>
-        {/* <h1 className='bg-green-500 text-white font-bold rounded-full h-6 w-6 flex items-center justify-center'>{unRead[contact.username]}</h1> */}
+        {unRead[contact.username]!=0?<h1 className='bg-green-500 text-white font-bold rounded-full h-6 w-6 flex items-center justify-center'>{unRead[contact.username]}</h1>:<></>}
       </div>
     </div>
   );

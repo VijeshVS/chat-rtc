@@ -64,5 +64,5 @@ export const messagesLoadingAtom = atom({
 
 export const unReadMessagesAtom = atom({
     key : 'unReadMessagesAtom',
-    default: []
+    default: {}
 })

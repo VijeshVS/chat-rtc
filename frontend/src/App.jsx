@@ -13,7 +13,7 @@ import { getConversation } from "./utils/message";
 import { io } from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
 import "react-toastify/dist/ReactToastify.css";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   authState,
   contactsAtom,
@@ -26,6 +26,7 @@ import {
   userAtom,
 } from "./store/store";
 import GroupList from "./components/GroupList";
+import NotSupported from "./components/NotSupported";
 
 function App() {
   const [loginState, setLoginState] = useState(false);
@@ -55,20 +56,31 @@ function App() {
       }),
     [auth]
   );
+
   useEffect(() => {
     if (auth && socket == null) {
       const new_socket = io(import.meta.env.VITE_BACKEND_URL, {
         transports: ["websocket"],
       });
 
-      new_socket.on("connect", () => {
-        console.log("connected with sockets");
-        setSocket(new_socket);
-      });
+      const connectSocket = () => {
+        new_socket.on("connect", () => {
+          console.log("connected with sockets");
+          setSocket(new_socket);
+        });
 
-      new_socket.on(user.username, (msg) => {
-        setMessages((prevMessages) => [...prevMessages, msg]);
-      });
+        new_socket.on(user.username, (msg) => {
+          setMessages((prevMessages) => [...prevMessages, msg]);
+        });
+
+        new_socket.on("disconnect", () => {
+          console.log("Socket disconnected, attempting to reconnect...");
+          setSocket(null); // Clear the current socket
+          connectSocket(); // Attempt to reconnect
+        });
+      };
+
+      connectSocket();
 
       return () => {
         new_socket.off(user.username);
@@ -76,6 +88,24 @@ function App() {
       };
     }
   }, [auth]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.off(user.username);
+      socket.on(user.username, (msg) => {
+        if (selectedContact.username != msg.from) {
+          setUnRead((prevUnRead) => {
+            const newUnRead = { ...prevUnRead };
+            newUnRead[msg.from] = newUnRead[msg.from]
+              ? newUnRead[msg.from] + 1
+              : 1;
+            return newUnRead;
+          });
+        }
+        setMessages((prevMessages) => [...prevMessages, msg]);
+      });
+    }
+  }, [socket, unRead, selectedContact]);
 
   // Handle Authentication
   useEffect(() => {
@@ -99,14 +129,17 @@ function App() {
   useEffect(() => {
     setMessages([]);
     setMessagesLoading(true);
+
     if (auth && selectedContact.username != "Name") {
       const token = localStorage.getItem("token");
       getConversation(selectedContact.username, token)
         .then((res) => {
           setMessages(res.messages);
-          const new_unread = unRead;
-          new_unread[selectedContact.username] = 0;
-          setUnRead(new_unread);
+          setUnRead((prevUnread) => {
+            const new_unread = { ...prevUnread };
+            new_unread[selectedContact.username] = 0;
+            return new_unread;
+          });
           setMessagesLoading(false);
         })
         .catch((e) => {
@@ -127,9 +160,30 @@ function App() {
     setUnRead(new_unread);
   }, [contacts]);
 
+  // useEffect(()=>{
+  //   // sort the contacts according to the no of unread
+  //   if(unRead)
+  //   setContacts((cc)=>{
+  //     const new_cons = [...cc];
+
+  //     for(let i = 0;i<new_cons.length;i++){
+  //       for(let j = i;j<n-i-1;j++){
+  //         if(unRead[new_cons[i+1].username] < unRead[new_cons[i].username]){
+  //           let temp = new_cons[i+1];
+  //           new_cons[i+1] = new_cons[i];
+  //           new_cons[i] = temp
+  //         }
+  //       }
+  //     }
+
+  //     return new_cons
+  //   })
+
+  // },[socket])
+
   return (
     <div>
-      <div className={`flex space-x-2 bg-gray-300 h-screen px-8 py-4 `}>
+      <div className={`lg:flex space-x-2 hidden bg-gray-300 h-screen px-8 py-4 `}>
         <ToastContainer
           position="top-right"
           autoClose={2000}
@@ -170,17 +224,7 @@ function App() {
           )}
         </div>
       </div>
-      {/* <div className="flex h-screen lg:hidden justify-center items-center bg-gray-100 p-8 rounded-lg shadow-lg">
-        <div className="text-center">
-          <div className="flex justify-center mb-4">
-            <img src="./support.svg" alt="" />
-          </div>
-          <h1 className="text-2xl font-bold text-gray-700">Not Supported</h1>
-          <p className="text-gray-600 mt-2">
-            This website is not supported on your device.
-          </p>
-        </div>
-      </div> */}
+      <NotSupported/>
     </div>
   );
 }
