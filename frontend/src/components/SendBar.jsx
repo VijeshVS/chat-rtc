@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { messagesAtom, selectContactAtom, userAtom } from "../store/store";
 import TelegramIcon from "@mui/icons-material/Telegram";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "sonner";
 
 const SendBar = ({ socket }) => {
   const [msg, setMsg] = useState("");
@@ -23,16 +23,7 @@ const SendBar = ({ socket }) => {
       setMsg("");
       setMessages((c) => [...c, newMsg]);
     } else {
-      toast.error("Message cannot be empty!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.error("Message cannot be empty!");
     }
   };
 

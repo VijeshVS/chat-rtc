@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { login } from "../utils/auth";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { jwtDecode } from "jwt-decode";
 import { useSetRecoilState } from "recoil";
 import { authState, userAtom } from "../store/store";
@@ -44,9 +44,15 @@ const Login = ({ setLoginState }) => {
             });
 
             toast.promise(res, {
-              pending: "Logging in....",
+              loading: "Logging in....",
               success: "Logged in successfully 👌",
               error: "Login Failed",
+              classNames: {
+                error: "bg-red-400",
+                success: "text-green-900 bg-slate-100",
+                warning: "text-yellow-400",
+                info: "bg-blue-400",
+              },
             });
           }}
           className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold p-3 rounded-full hover:scale-105 transition-transform duration-200 ease-in-out text-sm w-32 shadow-md"

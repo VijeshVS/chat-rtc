@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { authState, selectContactAtom, userAtom } from "../store/store";
 import { isLoggedIn } from "../utils/auth";
@@ -23,9 +23,15 @@ export function useAuth() {
         });
 
       toast.promise(res, {
-        pending: "Authenticating......",
+        loading: "Authenticating......",
         success: "Welcome Back 🎉",
-        error: "Register/Login to continue",
+        error: "Register or Login to continue",
+        classNames: {
+          error: "bg-red-400",
+          success: "text-green-900 bg-slate-100",
+          warning: "text-yellow-400",
+          info: "bg-blue-400",
+        },
       });
     }
   }, []);

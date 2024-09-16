@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Button, Divider, Avatar } from "@mui/material";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authState, userAtom } from "../store/store";
 
@@ -78,7 +78,11 @@ export default function Profile() {
                     onClick={() => {
                       setAuth(false);
                       localStorage.setItem("token", "");
-                      toast.success("Logged out successfully!!");
+                      toast.success("Logged out successfully!!",{
+                        classNames: {
+                          success: "text-green-900 bg-slate-100",
+                        }
+                      });
                       handleClose();
                     }}
                     variant="contained"

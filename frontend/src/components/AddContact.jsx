@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import AddIcon from "@mui/icons-material/Add";
 import { Button, TextField } from "@mui/material";
 import { addContact } from "../utils/contact";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { authState, contactsAtom, userAtom } from "../store/store";
 import { useState } from "react";
@@ -102,9 +102,15 @@ export default function AddContactButton() {
                       });
 
                       toast.promise(res, {
-                        pending: "Adding Contact...",
+                        loading: "Adding Contact...",
                         success: "Contact Added Successfully 👌",
                         error: "Contact not found !!",
+                        classNames: {
+                          error: "text-red-600",
+                          success: "text-green-900 bg-slate-100",
+                          warning: "text-yellow-400",
+                          info: "bg-blue-400",
+                        },
                       });
                     } else {
                       toast.info("Contact is already added!");
