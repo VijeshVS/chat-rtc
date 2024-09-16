@@ -13,7 +13,7 @@ import { useContacts } from "./hooks/useContacts";
 import { useAuth } from "./hooks/useAuth";
 import { useMessages } from "./hooks/useMessages";
 import { useUnRead } from "./hooks/useUnRead";
-import { Toaster } from "sonner";
+import { Toaster } from 'sonner';
 
 function App() {
   const [loginState, setLoginState] = useState(false);
